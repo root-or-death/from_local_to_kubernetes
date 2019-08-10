@@ -1,0 +1,44 @@
+# Namespace
+apiVersion: v1
+kind: Namespace
+metadata:
+   name: dev
+
+---
+# Deployment
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  namespace: dev
+  name: go-app
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: go-app
+    spec:
+      containers:
+        - name: go-app
+          image: golang-workshop:0.1.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http-port
+              containerPort: 8080
+
+---
+
+# service (svc)
+apiVersion: v1
+kind: Service
+metadata:
+  name: go-app
+  namespace: dev
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+  selector:
+    app: go-app
