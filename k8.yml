@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: go-app
-          image: golang-workshop:0.1.0
+          image: sjortiz/test-lab
           imagePullPolicy: IfNotPresent
           ports:
             - name: http-port
